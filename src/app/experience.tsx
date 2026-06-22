@@ -5,7 +5,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 const EXPERIENCES = [
   {
     role: "Tech Lead",
-    company: "MentorMind",
+    company: "MentorMind LTD",
     period: "2025 — Now",
     note: "Platform architecture, multi-tenant RBAC, Gemini and AWS Bedrock LLM pipelines, IELTS modules, and 19-language delivery on Next.js 15 and AWS.",
     current: true,

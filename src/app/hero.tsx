@@ -33,7 +33,7 @@ function Hero() {
           <div className="animate-in mb-8 inline-flex items-center gap-2 border border-line px-3 py-1.5 dark:border-line-dark">
             <span className="h-2 w-2 rounded-full bg-accent" aria-hidden="true" />
             <span className="font-mono text-xs uppercase tracking-[0.18em] text-ink-muted dark:text-ink-dark-muted">
-              Tech Lead · MentorMind
+              Tech Lead · MentorMind LTD
             </span>
           </div>
 
@@ -43,7 +43,7 @@ function Hero() {
           </h1>
 
           <p className="animate-in delay-2 mt-8 max-w-md text-base leading-[1.75] text-ink-muted dark:text-ink-dark-muted">
-            Tech lead at MentorMind. Founding engineer at OneCart. Previously
+            Tech lead at MentorMind LTD. Founding engineer at OneCart. Previously
             senior full-stack at InvoZone — Next.js, React Native, and AWS.
           </p>
 

@@ -38,7 +38,7 @@ type CurrentWorkProject = Omit<Project, "span"> & {
 const CURRENT_WORK: CurrentWorkProject[] = [
   {
     img: MentorMind,
-    title: "MentorMind",
+    title: "MentorMind LTD",
     role: "Tech Lead",
     type: "EdTech · GCSE · A-Level · IELTS",
     summary:
