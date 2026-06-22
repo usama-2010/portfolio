@@ -37,14 +37,6 @@ package-lock.json
 pnpm-lock.yaml
 yarn.lock
 
-# Large images - EXCLUDE ALL IMAGES FROM GIT
-public/projects/*.png
-public/projects/*.jpg
-public/projects/*.JPG
-public/image/*.png
-public/image/*.jpg
-public/image/*.JPG
-
 # PDF files
 *.pdf
 public/CV/
