@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+
+# Production
+/build
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env*.local
+
+# OS files
+.DS_Store
+*.pem
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Lock files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Large images - EXCLUDE ALL IMAGES FROM GIT
+public/projects/*.png
+public/projects/*.jpg
+public/projects/*.JPG
+public/image/*.png
+public/image/*.jpg
+public/image/*.JPG
+
+# PDF files
+*.pdf
+public/CV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
