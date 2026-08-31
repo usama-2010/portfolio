@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useTheme } from "@/components/theme-provider";
 import type { Theme } from "@/lib/theme";
 
@@ -187,6 +187,52 @@ function ThemeIcon({ theme, active }: { theme: Theme; active: boolean }) {
   return <MoonIcon active={active} />;
 }
 
+function ToggleButton({
+  value,
+  label,
+  active,
+  buttonSize,
+  onSelect,
+}: {
+  value: Theme;
+  label: string;
+  active: boolean;
+  buttonSize: number;
+  onSelect: (value: Theme) => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={() => onSelect(value)}
+      aria-label={label}
+      aria-pressed={active}
+      title={label}
+      style={{ width: buttonSize, height: buttonSize }}
+      className="theme-toggle-btn relative z-10 flex shrink-0 items-center justify-center rounded-full"
+    >
+      {active && (
+        <motion.span
+          layoutId="theme-toggle-pill"
+          className="theme-toggle-pill absolute inset-0 rounded-full"
+          transition={{ type: "spring", stiffness: 520, damping: 38, mass: 0.85 }}
+        />
+      )}
+
+      <span
+        className={`relative z-10 flex items-center justify-center ${
+          active
+            ? "text-paper dark:text-ink"
+            : "text-ink-muted dark:text-ink-dark-muted"
+        }`}
+      >
+        <ThemeIcon theme={value} active={active} />
+      </span>
+
+      <span className="sr-only">{label}</span>
+    </button>
+  );
+}
+
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const reduceMotion = useReducedMotion();
@@ -256,7 +302,7 @@ export function ThemeToggle() {
         width: expanded ? expandedWidth : collapsedWidth,
       }}
       transition={reduceMotion ? { duration: 0 } : spring}
-      className="theme-toggle relative inline-flex shrink-0 items-center overflow-hidden rounded-full border border-line bg-paper-elevated/80 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] backdrop-blur-sm dark:border-line-dark dark:bg-paper-elevated-dark/80 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+      className="theme-toggle relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full border border-line bg-paper-elevated/80 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] backdrop-blur-sm dark:border-line-dark dark:bg-paper-elevated-dark/80 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
     >
       <motion.span
         aria-hidden="true"
@@ -273,64 +319,46 @@ export function ThemeToggle() {
         transition={{ duration: reduceMotion ? 0 : 0.45, ease: [0.16, 1, 0.3, 1] }}
       />
 
-      <motion.div
-        className="relative flex items-center"
-        animate={{
-          x: expanded ? 0 : -activeIndex * buttonSize,
-        }}
-        transition={reduceMotion ? { duration: 0 } : spring}
-      >
-        {OPTIONS.map(({ value, label }) => {
-          const active = theme === value;
-          const visible = expanded || active;
-
-          return (
-            <motion.button
-              key={value}
-              type="button"
-              onClick={() => handleThemeSelect(value)}
-              aria-label={label}
-              aria-pressed={active}
-              title={label}
-              tabIndex={visible ? 0 : -1}
-              animate={{
-                width: visible ? buttonSize : 0,
-                opacity: visible ? 1 : 0,
-              }}
-              transition={reduceMotion ? { duration: 0 } : spring}
-              style={{ height: buttonSize }}
-              className="theme-toggle-btn relative z-10 flex shrink-0 items-center justify-center overflow-hidden rounded-full"
-            >
-              {active && (
-                <motion.span
-                  layoutId="theme-toggle-pill"
-                  className="theme-toggle-pill absolute inset-0 rounded-full"
-                  transition={reduceMotion ? { duration: 0 } : spring}
-                />
-              )}
-
-              <motion.span
-                className={`relative z-10 ${
-                  active
-                    ? "text-paper dark:text-paper-dark"
-                    : "text-ink-muted dark:text-ink-dark-muted"
-                }`}
-                whileHover={
-                  expanded && !active && canHover
-                    ? { scale: 1.05, y: -1 }
-                    : undefined
-                }
-                whileTap={{ scale: 0.94 }}
-                transition={spring}
-              >
-                <ThemeIcon theme={value} active={active} />
-              </motion.span>
-
-              <span className="sr-only">{label}</span>
-            </motion.button>
-          );
-        })}
-      </motion.div>
+      <AnimatePresence mode="wait" initial={false}>
+        {expanded ? (
+          <motion.div
+            key="expanded"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: reduceMotion ? 0 : 0.15 }}
+            className="relative flex items-center"
+          >
+            {OPTIONS.map(({ value, label }) => (
+              <ToggleButton
+                key={value}
+                value={value}
+                label={label}
+                active={theme === value}
+                buttonSize={buttonSize}
+                onSelect={handleThemeSelect}
+              />
+            ))}
+          </motion.div>
+        ) : (
+          <motion.div
+            key={`collapsed-${theme}`}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.18 }}
+            className="relative flex items-center justify-center"
+          >
+            <ToggleButton
+              value={theme}
+              label={OPTIONS.find((option) => option.value === theme)?.label ?? "Theme"}
+              active
+              buttonSize={buttonSize}
+              onSelect={handleThemeSelect}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
