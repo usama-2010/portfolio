@@ -56,7 +56,7 @@ export default function OpenGraphImage() {
               lineHeight: 1.4,
             }}
           >
-            Tech lead at MentorMind · Founding engineer at OneCart · London
+            Senior Full-Stack Engineer at MentorMind LTD · London
           </div>
         </div>
         <div

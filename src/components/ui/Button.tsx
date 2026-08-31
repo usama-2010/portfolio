@@ -15,10 +15,10 @@ export function LinkButton({
   className = "",
 }: LinkButtonProps) {
   const base =
-    "inline-flex items-center gap-2 text-base font-medium tracking-wide transition-all duration-300 ease-premium";
+    "inline-flex items-center gap-2 text-sm font-medium tracking-wide transition-all duration-300 ease-premium sm:text-base";
   const variants = {
     primary:
-      "bg-ink px-6 py-3 text-paper hover:bg-accent dark:bg-ink-dark dark:text-paper-dark dark:hover:bg-accent",
+      "rounded-full bg-ink px-5 py-2.5 text-paper hover:bg-accent sm:px-6 sm:py-3 dark:bg-ink-dark dark:text-paper-dark dark:hover:bg-accent",
     ghost:
       "link-underline text-ink hover:text-accent dark:text-ink-dark",
   };

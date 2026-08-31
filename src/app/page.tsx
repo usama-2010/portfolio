@@ -10,7 +10,7 @@ import Experience from "./experience";
 
 export default function Portfolio() {
   return (
-    <div className="min-h-screen bg-paper dark:bg-paper-dark">
+    <div className="min-h-screen overflow-x-clip bg-paper dark:bg-paper-dark">
       <ScrollProgress />
       <Navbar />
       <main>

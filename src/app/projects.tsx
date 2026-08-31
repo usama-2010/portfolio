@@ -12,6 +12,7 @@ import OneCart from "../../public/projects/onecart.png";
 import { useState } from "react";
 import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { LiveDot } from "@/components/ui/LiveDot";
 
 type Project = {
   img: StaticImageData;
@@ -33,16 +34,17 @@ type WorkDomain = { label: string; items: string[] };
 type CurrentWorkProject = Omit<Project, "span"> & {
   metrics?: WorkMetric[];
   domains?: WorkDomain[];
+  period?: string;
 };
 
 const CURRENT_WORK: CurrentWorkProject[] = [
   {
     img: MentorMind,
     title: "MentorMind LTD",
-    role: "Tech Lead",
+    role: "Senior Full-Stack Engineer",
     type: "EdTech · GCSE · A-Level · IELTS",
     summary:
-      "Tech lead on the platform — multi-tenant RBAC, Gemini and AWS Bedrock LLM pipelines for marking and tutoring, IELTS modules, and 19-language delivery on Next.js 15, AWS, and Azure Speech.",
+      "Senior Full-Stack Engineer on the platform — multi-tenant RBAC, Gemini and AWS Bedrock LLM pipelines for marking and tutoring, IELTS modules, and 19-language delivery on Next.js 15, AWS, and Azure Speech.",
     metrics: [
       { value: "GCSE · A-Level · IELTS", label: "Exam programmes" },
       { value: "Gemini · Bedrock", label: "LLM stack" },
@@ -92,18 +94,22 @@ const CURRENT_WORK: CurrentWorkProject[] = [
     liveUrl: "https://mentormind.co.uk",
     current: true,
   },
+];
+
+const RECENT_WORK: CurrentWorkProject[] = [
   {
     img: OneCart,
     title: "OneCart",
-    role: "Founding Engineer",
+    role: "Full Stack Engineer",
+    period: "2025 — Feb 2026",
     type: "Live commerce · UK",
     summary:
-      "Founding engineer — set architecture and built the React Native app, Next.js seller dashboard, and real-time bidding backend.",
+      "Full Stack Engineer — set architecture and built the React Native app, Next.js seller dashboard, and real-time bidding backend.",
     metrics: [
       { value: "Live commerce", label: "Model" },
       { value: "Real-time", label: "Bidding" },
       { value: "iOS & Android", label: "Mobile" },
-      { value: "Production", label: "Status" },
+      { value: "Feb 2026", label: "Completed" },
     ],
     domains: [
       {
@@ -141,7 +147,6 @@ const CURRENT_WORK: CurrentWorkProject[] = [
       "Stripe",
     ],
     liveUrl: "https://onecart.uk.com",
-    current: true,
   },
 ];
 
@@ -202,8 +207,8 @@ const PROJECTS: Project[] = [
 ];
 
 function spanClass(span: Project["span"]) {
-  if (span === "large") return "md:col-span-2 md:row-span-2";
-  if (span === "wide") return "md:col-span-2";
+  if (span === "large") return "md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2";
+  if (span === "wide") return "md:col-span-2 lg:col-span-2";
   return "";
 }
 
@@ -229,25 +234,26 @@ function CurrentWorkCard({ project }: { project: CurrentWorkProject }) {
             sizes="100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between gap-4 p-5 md:p-6">
-            <div>
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/50">
+          <div className="absolute bottom-0 left-0 right-0 flex flex-col gap-3 p-4 sm:flex-row sm:items-end sm:justify-between sm:gap-4 sm:p-5 md:p-6">
+            <div className="min-w-0">
+              <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-white/50 sm:text-xs sm:tracking-[0.2em]">
                 Live product
               </p>
-              <p className="mt-1 font-mono text-base text-white/80">
+              <p className="mt-1 break-all font-mono text-sm text-white/80 sm:break-normal sm:text-base">
                 {project.liveUrl?.replace(/^https?:\/\//, "")}
               </p>
             </div>
-            <span className="hidden border border-white/20 bg-black/30 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-white/70 backdrop-blur-sm sm:inline">
+            <span className="hidden rounded-full border border-white/20 bg-black/30 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-white/70 backdrop-blur-sm sm:inline">
               Production
             </span>
           </div>
         </a>
 
-        <div className="p-6 md:p-10">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-line pb-6 dark:border-line-dark">
-            <span className="font-mono text-xs uppercase tracking-[0.22em] text-accent">
-              Now
+        <div className="p-4 sm:p-6 md:p-10">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-line pb-4 dark:border-line-dark sm:gap-x-4 sm:pb-6">
+            <span className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.22em] text-accent">
+              {project.current && <LiveDot className="h-1.5 w-1.5" />}
+              {project.current ? "Now" : project.period ?? "Recent"}
             </span>
             <span className="hidden h-3 w-px bg-line dark:bg-line-dark sm:block" aria-hidden="true" />
             {project.role && (
@@ -261,7 +267,7 @@ function CurrentWorkCard({ project }: { project: CurrentWorkProject }) {
             </span>
           </div>
 
-          <h3 className="mt-8 font-display text-[clamp(1.75rem,4vw,2.25rem)] font-bold tracking-tight text-ink dark:text-ink-dark">
+          <h3 className="mt-6 font-display text-[clamp(1.5rem,5vw,2.25rem)] font-bold tracking-tight text-ink sm:mt-8 dark:text-ink-dark">
             {project.title}
           </h3>
           <p className="mt-4 max-w-3xl text-base leading-[1.85] text-ink-muted dark:text-ink-dark-muted">
@@ -269,16 +275,16 @@ function CurrentWorkCard({ project }: { project: CurrentWorkProject }) {
           </p>
 
           {project.metrics && project.metrics.length > 0 && (
-            <dl className="mt-8 grid grid-cols-2 gap-px border border-line bg-line dark:border-line-dark dark:bg-line-dark sm:grid-cols-4">
+            <dl className="mt-6 grid grid-cols-1 gap-px border border-line bg-line dark:border-line-dark dark:bg-line-dark sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
               {project.metrics.map(({ value, label }) => (
                 <div
                   key={label}
-                  className="bg-paper-elevated px-4 py-4 dark:bg-paper-elevated-dark md:px-5 md:py-5"
+                  className="bg-paper-elevated px-3 py-3 dark:bg-paper-elevated-dark sm:px-4 sm:py-4 md:px-5 md:py-5"
                 >
-                  <dt className="font-mono text-xs uppercase tracking-[0.16em] text-ink-muted dark:text-ink-dark-muted">
+                  <dt className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-ink-muted dark:text-ink-dark-muted sm:text-xs sm:tracking-[0.16em]">
                     {label}
                   </dt>
-                  <dd className="mt-1.5 font-display text-lg font-bold tracking-tight text-ink dark:text-ink-dark md:text-xl">
+                  <dd className="mt-1 break-words font-display text-base font-bold tracking-tight text-ink dark:text-ink-dark sm:mt-1.5 sm:text-lg md:text-xl">
                     {value}
                   </dd>
                 </div>
@@ -316,12 +322,12 @@ function CurrentWorkCard({ project }: { project: CurrentWorkProject }) {
             </div>
           )}
 
-          <div className="mt-10 flex flex-col gap-6 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between dark:border-line-dark">
-            <div className="flex flex-wrap gap-2">
+          <div className="mt-8 flex flex-col gap-6 border-t border-line pt-6 sm:mt-10 sm:flex-row sm:items-center sm:justify-between sm:pt-8 dark:border-line-dark">
+            <div className="flex min-w-0 flex-wrap gap-2">
               {project.techStack.map((tech) => (
                 <span
                   key={tech}
-                  className="border border-line px-2.5 py-1 font-mono text-xs uppercase tracking-wider text-ink-muted dark:border-line-dark dark:text-ink-dark-muted"
+                  className="rounded-full border border-line px-2 py-0.5 font-mono text-[0.65rem] uppercase tracking-wider text-ink-muted dark:border-line-dark dark:text-ink-dark-muted sm:px-2.5 sm:py-1 sm:text-xs"
                 >
                   {tech}
                 </span>
@@ -332,7 +338,7 @@ function CurrentWorkCard({ project }: { project: CurrentWorkProject }) {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex shrink-0 items-center gap-1.5 border border-line px-4 py-2.5 font-mono text-sm uppercase tracking-wider text-ink transition-colors hover:border-accent hover:text-accent dark:border-line-dark dark:text-ink-dark"
+                className="inline-flex w-full shrink-0 items-center justify-center gap-1.5 rounded-full border border-line px-4 py-2.5 font-mono text-xs uppercase tracking-wider text-ink transition-colors hover:border-accent hover:text-accent sm:w-auto sm:text-sm dark:border-line-dark dark:text-ink-dark"
               >
                 View live platform
                 <ArrowUpRightIcon className="h-3.5 w-3.5" />
@@ -359,7 +365,7 @@ function ProjectTile({
 
   return (
     <article
-      className={`group relative min-h-[300px] overflow-hidden bg-ink dark:bg-[#141414] ${spanClass(project.span)}`}
+      className={`group relative min-h-[240px] overflow-hidden bg-ink sm:min-h-[280px] md:min-h-[300px] dark:bg-[#141414] ${spanClass(project.span)}`}
     >
       <Image
         src={project.img}
@@ -375,44 +381,46 @@ function ProjectTile({
       </span>
 
       {project.current && (
-        <span className="absolute left-6 top-6 inline-flex items-center gap-1.5 border border-white/20 bg-black/40 px-2 py-1 backdrop-blur-sm">
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-40" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
-          </span>
+        <span className="absolute left-6 top-6 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/40 px-2 py-1 backdrop-blur-sm">
+          <LiveDot className="h-1.5 w-1.5" />
           <span className="font-mono text-xs uppercase tracking-widest text-white/90">
             In progress
           </span>
         </span>
       )}
 
-      <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-        <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/50">
+      <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6 md:p-8">
+        <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-white/50 sm:text-xs sm:tracking-[0.22em]">
           {project.type}
         </p>
-        <h3 className="mt-2 font-display text-2xl font-bold text-white md:text-[1.75rem]">
+        <h3 className="mt-1.5 font-display text-xl font-bold text-white sm:mt-2 sm:text-2xl md:text-[1.75rem]">
           {project.title}
         </h3>
-        <p className="mt-2 max-w-sm text-base leading-relaxed text-white/60 opacity-0 transition-all duration-500 group-hover:opacity-100">
+        <p className="mt-2 max-w-sm text-sm leading-relaxed text-white/70 max-sm:opacity-100 sm:text-base sm:text-white/60 sm:opacity-0 sm:transition-all sm:duration-500 sm:group-hover:opacity-100">
           {project.summary}
         </p>
-        <div className="mt-5 flex flex-wrap gap-2 opacity-0 transition-all duration-500 group-hover:opacity-100">
-          {project.techStack.map((tech) => (
+        <div className="mt-3 flex flex-wrap gap-1.5 max-sm:opacity-100 sm:mt-5 sm:gap-2 sm:opacity-0 sm:transition-all sm:duration-500 sm:group-hover:opacity-100">
+          {project.techStack.slice(0, 4).map((tech) => (
             <span
               key={tech}
-              className="border border-white/20 px-2 py-0.5 font-mono text-xs text-white/70"
+              className="rounded-full border border-white/20 px-1.5 py-0.5 font-mono text-[0.65rem] text-white/70 sm:px-2 sm:text-xs"
             >
               {tech}
             </span>
           ))}
+          {project.techStack.length > 4 && (
+            <span className="font-mono text-[0.65rem] text-white/50 sm:text-xs">
+              +{project.techStack.length - 4}
+            </span>
+          )}
         </div>
-        <div className="mt-5 flex items-center gap-5">
+        <div className="mt-3 flex flex-wrap items-center gap-4 sm:mt-5 sm:gap-5">
           {link && (
             <a
               href={link}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 font-mono text-sm uppercase tracking-wider text-white transition-colors hover:text-accent-muted"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3 py-1.5 font-mono text-sm uppercase tracking-wider text-white transition-colors hover:border-white/40 hover:text-accent-muted"
             >
               Visit
               <ArrowUpRightIcon className="h-3.5 w-3.5" />
@@ -422,7 +430,7 @@ function ProjectTile({
             <button
               type="button"
               onClick={() => onVideoClick(project)}
-              className="font-mono text-sm uppercase tracking-wider text-white/60 transition-colors hover:text-white"
+              className="rounded-full border border-white/20 px-3 py-1.5 font-mono text-sm uppercase tracking-wider text-white/60 transition-colors hover:border-white/40 hover:text-white"
             >
               Demo
             </button>
@@ -440,11 +448,12 @@ export function Projects() {
     <section className="section-rule site-grid" id="projects">
       <SectionHeader
         title="Work"
-        subtitle="Current production engagements, then selected earlier projects."
+        subtitle="Current production work, recent engagements, then selected earlier projects."
       />
 
       <div className="mb-12 space-y-4 md:mb-16">
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-ink-muted dark:text-ink-dark-muted">
+        <p className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.2em] text-ink-muted dark:text-ink-dark-muted">
+          <LiveDot className="h-1.5 w-1.5" />
           Now
         </p>
         <div className="grid gap-8 md:grid-cols-1 md:gap-12">
@@ -454,11 +463,24 @@ export function Projects() {
         </div>
       </div>
 
+      {RECENT_WORK.length > 0 && (
+        <div className="mb-12 space-y-4 md:mb-16">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-ink-muted dark:text-ink-dark-muted">
+            Recent
+          </p>
+          <div className="grid gap-8 md:grid-cols-1 md:gap-12">
+            {RECENT_WORK.map((project) => (
+              <CurrentWorkCard key={project.title} project={project} />
+            ))}
+          </div>
+        </div>
+      )}
+
       <p className="mb-6 font-mono text-xs uppercase tracking-[0.2em] text-ink-muted dark:text-ink-dark-muted md:mb-8">
         Earlier work
       </p>
 
-      <div className="grid grid-cols-1 gap-1 md:grid-cols-3 md:auto-rows-[minmax(260px,auto)]">
+      <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[minmax(260px,auto)]">
         {PROJECTS.map((project, index) => (
           <ProjectTile
             key={project.title}
@@ -471,37 +493,38 @@ export function Projects() {
 
       {selectedProject && isValidYoutubeId(selectedProject.youtubeId) && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-end justify-center bg-black/95 p-0 backdrop-blur-sm sm:items-center sm:p-4"
           onClick={() => setSelectedProject(null)}
           role="dialog"
           aria-modal="true"
           aria-label={`${selectedProject.title} demo`}
         >
           <div
-            className="w-full max-w-5xl"
+            className="max-h-[100dvh] w-full overflow-y-auto sm:max-w-5xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="mb-4 flex items-center justify-between">
-              <p className="font-display text-lg font-bold text-white">
+            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-white/10 bg-black/95 px-4 py-3 sm:static sm:border-0 sm:bg-transparent sm:px-0 sm:py-0">
+              <p className="font-display text-base font-bold text-white sm:text-lg">
                 {selectedProject.title}
               </p>
               <button
                 type="button"
-                className="font-mono text-sm uppercase tracking-widest text-white/50 transition-colors hover:text-white"
+                className="rounded-full border border-white/20 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-white/50 transition-colors hover:border-white/40 hover:text-white sm:text-sm"
                 onClick={() => setSelectedProject(null)}
               >
                 Close ✕
               </button>
             </div>
-            <div className="overflow-hidden border border-white/10">
-              <iframe
-                width="100%"
-                height="500"
-                src={`https://www.youtube.com/embed/${selectedProject.youtubeId}?autoplay=1`}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                title={selectedProject.title}
-              />
+            <div className="overflow-hidden border-white/10 sm:border">
+              <div className="aspect-video w-full">
+                <iframe
+                  className="h-full w-full"
+                  src={`https://www.youtube.com/embed/${selectedProject.youtubeId}?autoplay=1`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  title={selectedProject.title}
+                />
+              </div>
             </div>
           </div>
         </div>

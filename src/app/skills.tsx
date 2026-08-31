@@ -67,36 +67,36 @@ export function Skills() {
         subtitle="Five years across startups and agencies — shipping products end to end."
       />
 
-      <div className="grid gap-px bg-line dark:bg-line-dark md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-px bg-line dark:bg-line-dark sm:grid-cols-2 lg:grid-cols-4">
         {CAPABILITIES.map(({ area, detail }, i) => (
           <div
             key={area}
-            className="group bg-paper p-6 transition-colors duration-300 hover:bg-paper-elevated dark:bg-paper-dark dark:hover:bg-paper-elevated-dark md:p-8"
+            className="group bg-paper p-5 transition-colors duration-300 hover:bg-paper-elevated dark:bg-paper-dark dark:hover:bg-paper-elevated-dark sm:p-6 md:p-8"
           >
             <span className="font-mono text-xs text-ink-muted/60 dark:text-ink-dark-muted/60">
               0{i + 1}
             </span>
-            <p className="mt-3 font-display text-xl font-bold text-ink transition-colors group-hover:text-accent dark:text-ink-dark">
+            <p className="mt-3 font-display text-lg font-bold text-ink transition-colors group-hover:text-accent sm:text-xl dark:text-ink-dark">
               {area}
             </p>
-            <p className="mt-2 text-base leading-relaxed text-ink-muted dark:text-ink-dark-muted">
+            <p className="mt-2 text-sm leading-relaxed text-ink-muted sm:text-base dark:text-ink-dark-muted">
               {detail}
             </p>
           </div>
         ))}
       </div>
 
-      <div className="mt-12 space-y-8 border-t border-line pt-8 dark:border-line-dark">
+      <div className="mt-10 space-y-7 border-t border-line pt-7 sm:mt-12 sm:space-y-8 sm:pt-8 dark:border-line-dark">
         {STACK_GROUPS.map(({ label, items }) => (
           <div key={label}>
-            <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-ink-muted dark:text-ink-dark-muted">
+            <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-ink-muted sm:mb-4 dark:text-ink-dark-muted">
               {label}
             </p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
               {items.map((tech) => (
                 <span
                   key={tech}
-                  className="border border-line px-3 py-1.5 font-mono text-base text-ink-muted transition-colors hover:border-accent/40 hover:text-ink dark:border-line-dark dark:text-ink-dark-muted dark:hover:text-ink-dark"
+                  className="rounded-full border border-line px-2.5 py-1 font-mono text-sm text-ink-muted transition-colors hover:border-accent/40 hover:text-ink dark:border-line-dark dark:text-ink-dark-muted dark:hover:text-ink-dark sm:px-3 sm:py-1.5 sm:text-base"
                 >
                   {tech}
                 </span>

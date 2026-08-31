@@ -18,7 +18,7 @@ const EDUCATION = [
 export function Resume() {
   return (
     <section className="section-rule site-grid">
-      <div className="grid gap-10 md:grid-cols-2 md:gap-16">
+      <div className="grid gap-8 sm:gap-10 md:grid-cols-2 md:gap-16">
         <SectionHeader
           title="Education"
           subtitle="Formal training in software engineering and full-stack development."
